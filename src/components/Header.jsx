@@ -1,8 +1,8 @@
 import React from 'react';
 import Logo from '../img/logo.png';
 import Avatar from '../img/avatar.png';
-import { MdShoppingBasket } from 'react-icons/md'
-
+import { MdShoppingBasket } from 'react-icons/md';
+import { motion } from 'framer-motion';
 const Header = () => {
     return (
         <header className='w-screen fixed z-50 p-6 px-16'>
@@ -26,7 +26,9 @@ const Header = () => {
                             <p className='text-sm text-white font-semibold'>2</p>
                         </div>
                     </div>
-                    <img className='w-10 min-w-[40px] h-10 min-h-[40px] drop- shadow-2xl' src={Avatar} alt="userProfile" />
+                    <motion.img whileTap={{ scale: 0.6 }}
+                        className='w-10 min-w-[40px] h-10 min-h-[40px] drop- shadow-2xl'
+                        src={Avatar} alt="userProfile" />
                 </div>
 
             </div>
