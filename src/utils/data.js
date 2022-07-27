@@ -13,21 +13,21 @@ export const heroData = [
     {
         id: 2, name: 'Strawberries',
         description: 'Fresh & Strawberries',
-        price: '5.25',
+        price: '10.5',
         imageSrc: F1
     },
     {
         id: 3,
         name: 'Chicken Kebab',
         description: 'Mixed kebab Plate',
-        price: '5.25',
+        price: '15',
         imageSrc: C3
     },
     {
         id: 4,
         name: ' Fish Kebab',
         description: 'Fish & Kebab',
-        price: '5.25',
+        price: '25',
         imageSrc: Fi1
     }
 ]
