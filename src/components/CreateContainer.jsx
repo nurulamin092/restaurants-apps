@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { MdFastfood } from 'react-icons/md'
+import { categories } from '../utils/data';
 const CreateContainer = () => {
     const [title, setTitle] = useState("");
     const [calories, setCalories] = useState("");
@@ -40,6 +41,19 @@ const CreateContainer = () => {
                         outline-none border-none placeholder:text-gray-500 text-textColor'
                         required
                     />
+                </div>
+                <div className='w-full'>
+                    <select onChange={(e) => setCategory(e.target.value)}>
+                        <option value="other" className='bg-white'>Select Category</option>
+                        {
+                            categories && categories.map(item => (
+                                <option key={item.id} className='text-base border-0 outline-none 
+                                capitalize bg-white text-headingColor' value={item.urlParamName}>
+                                    {item.name}
+                                </option>
+                            ))
+                        }
+                    </select>
                 </div>
             </div>
         </div>
