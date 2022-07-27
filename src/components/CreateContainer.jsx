@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { MdFastfood } from 'react-icons/md'
 import { categories } from '../utils/data';
+import Loader from './Loader';
 const CreateContainer = () => {
     const [title, setTitle] = useState("");
     const [calories, setCalories] = useState("");
@@ -11,12 +12,12 @@ const CreateContainer = () => {
     const [fields, setFields] = useState(true);
     const [alertStatus, setAlertStatus] = useState("danger");
     const [msg, setMsg] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     return (
         <div className='w-full min-h-screen flex items-center justify-center'>
             <div className='w-[90%] md:w-[75%] border  border-gray-300 rounded-lg p-4 
-            flex flex-col items-center justify-center '>
+            flex flex-col items-center justify-center gap-4'>
                 {
                     fields && (
                         <motion.p
@@ -43,7 +44,11 @@ const CreateContainer = () => {
                     />
                 </div>
                 <div className='w-full'>
-                    <select onChange={(e) => setCategory(e.target.value)}>
+                    <select
+                        onChange={(e) => setCategory(e.target.value)}
+                        className='outline-none w-full text-base border-b-2
+                         border-green-200 p-2 rounded-md cursor-pointer'
+                    >
                         <option value="other" className='bg-white'>Select Category</option>
                         {
                             categories && categories.map(item => (
@@ -54,6 +59,12 @@ const CreateContainer = () => {
                             ))
                         }
                     </select>
+                </div>
+                <div className='group flex justify-center items-center flex-col 
+                border-2 border-dotted rounded-lg border-gray-300 w-full h-225 md:h-420 cursor-pointer'>
+                    {
+                        isLoading ? <Loader /> : <></>
+                    }
                 </div>
             </div>
         </div>
