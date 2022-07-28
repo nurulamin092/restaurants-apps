@@ -69,7 +69,40 @@ const CreateContainer = () => {
     };
 
     const saveDetails = () => {
+        setIsLoading(true);
+        try {
+            if ((!title || !calories || !imageAsset || !price || !category)) {
+                setFields(true);
+                setMsg("Required fields can't be empty");
+                setAlertStatus("danger");
+                setTimeout(() => {
+                    setFields(false);
+                    setIsLoading(false);
+                }, 4000);
+            }
+            else {
+                const data = {
+                    id: `${Date.now()}`,
+                    title: title,
+                    imageUrl: imageAsset,
+                    category: category,
+                    calories: calories,
+                    qty: 1,
+                    price: price
+                }
 
+            }
+        }
+        catch (error) {
+            console.log(error);
+            setFields(true);
+            setMsg("Error while uploading : Try AGain 🙇");
+            setAlertStatus("danger");
+            setTimeout(() => {
+                setFields(false);
+                setIsLoading(false);
+            }, 4000);
+        }
     };
 
 
