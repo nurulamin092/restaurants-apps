@@ -3,25 +3,62 @@ import { motion } from 'framer-motion'
 import { MdFastfood, MdCloudUpload, MdDelete, MdFoodBank, MdAttachMoney } from 'react-icons/md'
 import { categories } from '../utils/data';
 import Loader from './Loader';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { storage } from '../firebase.config';
 const CreateContainer = () => {
     const [title, setTitle] = useState("");
     const [calories, setCalories] = useState("");
     const [price, setPrice] = useState("");
     const [category, setCategory] = useState(null);
     const [imageAsset, setImageAsset] = useState(null);
-    const [fields, setFields] = useState(true);
+    const [fields, setFields] = useState(false);
     const [alertStatus, setAlertStatus] = useState("danger");
     const [msg, setMsg] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const uploadImage = (e) => {
+        setIsLoading(true);
+        const imageFile = e.target.files[0];
+        const storageRef = ref(storage, `Images/${Date.now()}-${imageFile.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, imageFile);
 
-
-    const uploadImage = () => {
-
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                const uploadProgress =
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            },
+            (error) => {
+                console.log(error);
+                setFields(true);
+                setMsg("Error while uploading : Try AGain 🙇");
+                setAlertStatus("danger");
+                setTimeout(() => {
+                    setFields(false);
+                    setIsLoading(false);
+                }, 4000);
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    setImageAsset(downloadURL);
+                    setIsLoading(false);
+                    setFields(true);
+                    setMsg("Image uploaded successfully 😊");
+                    setAlertStatus("success");
+                    setTimeout(() => {
+                        setFields(false);
+                    }, 4000);
+                });
+            }
+        );
     };
 
     const deleteImage = () => {
 
-    }
+    };
+
+    const saveDetails = () => {
+
+    };
 
 
     return (
@@ -149,9 +186,15 @@ const CreateContainer = () => {
                             placeholder='Price'
                             className='w-full h-full text-lg  bg-transparent 
                             outline-node border-none placeholder:border-gray-400 text-textColor'
-
                         />
                     </div>
+                </div>
+                <div className='flex items-center w-full'>
+                    <button type='button' className='ml-0 md:ml-auto w-full 
+                    md:w-auto border-none outline-none bg-emerald-500 px-12 
+                    py-2 rounded-lg text-lg text-white font-semibold' onClick={saveDetails}>
+                        Save
+                    </button>
                 </div>
             </div>
         </div>
